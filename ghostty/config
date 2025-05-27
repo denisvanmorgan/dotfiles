@@ -1,0 +1,11 @@
+theme = catppuccin-macchiato.conf
+shell-integration = zsh
+fullscreen = false
+macos-non-native-fullscreen = false
+macos-titlebar-style = hidden
+window-decoration = false
+background-opacity = 0.8
+background-blur-radius = 20
+font-family = "MesloLGL Nerd Font Mono"
+font-size = 13
+font-thicken = true
