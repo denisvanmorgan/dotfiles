@@ -39,7 +39,7 @@ main() {
     sleep 1
     /usr/local/bin/aerospace workspace "Terminal"
     echo "All apps opened ✅"
-    sudo sh $HOME/.config/start_vpn.sh $WS_VPN_PATH
+    sudo sh $HOME/.config/scripts/start_vpn.sh $WS_VPN_PATH
     sleep 1
     echo "Updating devstack... 🐳"
     sh $HOME/workspace/tools/development-stack/bin/update.sh
