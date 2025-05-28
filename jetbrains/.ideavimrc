@@ -1,0 +1,106 @@
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+" Change brackets real quick -> https://github.com/tpope/vim-surround
+Plug 'tpope/vim-surround'
+" Cool stuff with functin arguments
+Plug 'vim-scripts/argtextobj.vim'
+" Match all {}
+Plug 'dbakker/vim-paragraph-motion'
+" Nerdtree
+Plug 'preservim/nerdtree'
+
+set incsearch
+
+" Set encodings
+set scriptencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" Set leader key to space
+let mapleader = " "
+let maplocalleader = " "
+
+" Enable relative line numbers
+set number
+set relativenumber
+
+" Disable showing the mode below the statusline
+set noshowmode
+
+" Set tabs to 4 spaces
+set tabstop=4
+set softtabstop=4
+set expandtab
+
+" Enable auto indenting and set it to spaces
+set smartindent
+set shiftwidth=4
+
+" Enable smart indenting
+set breakindent
+set autoindent
+
+" Disable text wrap
+set nowrap
+
+" Better splitting
+set splitbelow
+set splitright
+
+" Decrease updatetime to 250ms
+set updatetime=250
+
+" Enable persistent undo history
+set undofile
+
+" Enable 24-bit color
+set termguicolors
+
+" Enable the sign column to prevent the screen from jumping
+set signcolumn=yes
+
+" Enable cursor line highlight
+set cursorline
+
+" Always keep 10 lines above/below cursor unless at start/end of file
+set scrolloff=999
+
+" Set command height to 0
+set cmdheight=0
+
+set backspace=indent,eol,start
+set title
+set ignorecase
+set showcmd
+
+" Buffer navigation
+nnoremap <leader>d :bd<CR>
+
+" Clipboard
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+vnoremap <leader>p "+p
+nnoremap <leader>p "+p
+inoremap <leader>p <C-r>+
+
+" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+nnoremap <leader>r :action Run<CR>
+nnoremap <leader>s :action Stop<CR>
+nnoremap \b :action ToggleLineBreakpoint<CR>
+nnoremap ga :action GotoAction<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap <leader>sh :action ShowHoverInfo<CR>
+nnoremap <leader>se :action ShowErrorDescription<CR>
+nnoremap <leader>gt :action GotoTest<CR>
+nnoremap <leader>re :action RenameElement<CR>
+nnoremap <leader>rf :action RenameFile<CR>
+nnoremap <leader>fu :action FindUsages<CR>
+nnoremap <leader>su :action ShowUsages<CR>
+nnoremap <leader>h :action PreviousTab<CR>
+nnoremap <leader>j :action NextTab<CR>
+nnoremap <C-z> :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>nc :action PhpNewClass<CR>
+map <leader>tr :NERDTree<CR>
