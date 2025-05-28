@@ -6,3 +6,5 @@ zsh/.zcompdump-*
 raycast
 op
 tmux/plugins/catppuccin/*
+nvim/tmux-client-*
+nvim/tmux-server-*
