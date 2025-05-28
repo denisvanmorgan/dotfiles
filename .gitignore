@@ -8,3 +8,4 @@ op
 tmux/plugins/catppuccin/*
 nvim/tmux-client-*
 nvim/tmux-server-*
+nvim/lazy-lock.json
