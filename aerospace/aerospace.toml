@@ -6,8 +6,8 @@ after-login-command = []
 # Startup borders
 # Startup SketchyBar
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xffb7bdf8 width=4.0 style=round',
-  'exec-and-forget sketchybar'
+  'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xffb7bdf8 width=2.0 style=round hidpi=on',
+  #'exec-and-forget sketchybar'
 ]
 
 # Notify Sketchybar about workspace change
@@ -34,10 +34,10 @@ on-focus-changed = 'move-mouse monitor-lazy-center'
 [gaps]
 inner.horizontal = 15
 inner.vertical = 15
-outer.left = 17
+outer.left = 15
 outer.bottom = 15
-outer.top = 75
-outer.right = 17
+outer.top = 15
+outer.right = 15
 
 [mode.main.binding]
     # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
@@ -87,25 +87,51 @@ outer.right = 17
 
     alt-1 = 'workspace Browser'
     alt-2 = 'workspace BrowserWork'
-    alt-3 = 'workspace Terminal'
+    alt-3 = 'workspace Ext1'
+    alt-4 = 'workspace Ext2'
+    alt-5 = 'workspace Ext3'
+    alt-6 = 'workspace Ext4'
+    alt-7 = 'workspace Ext5'
     alt-8 = 'workspace Misc'
     alt-9 = 'workspace Orbstack'
     alt-0 = 'workspace Email'
     alt-p = 'workspace IDE'
     alt-m = 'workspace Terminal'
+    alt-g = 'workspace Free'
 
     alt-shift-1 = 'move-node-to-workspace Browser'
     alt-shift-2 = 'move-node-to-workspace BrowserWork'
-    alt-shift-3 = 'move-node-to-workspace Terminal'
+    alt-shift-3 = 'move-node-to-workspace Ext1'
+    alt-shift-4 = 'move-node-to-workspace Ext2'
+    alt-shift-5 = 'move-node-to-workspace Ext3'
+    alt-shift-6 = 'move-node-to-workspace Ext4'
+    alt-shift-7 = 'move-node-to-workspace Ext5'
     alt-shift-8 = 'move-node-to-workspace Misc'
     alt-shift-9 = 'move-node-to-workspace Orbstack'
     alt-shift-0 = 'move-node-to-workspace Email'
     alt-shift-p = 'move-node-to-workspace IDE'
     alt-shift-m = 'move-node-to-workspace Terminal'
+    alt-shift-g = 'move-node-to-workspace Terminal'
+    ctrl-alt-cmd-l = 'move-workspace-to-monitor right'
+    ctrl-alt-cmd-h = 'move-workspace-to-monitor left'
 
     alt-shift-c = 'reload-config'
 
     alt-r = 'mode resize'
+
+[workspace-to-monitor-force-assignment]
+    "Browser" = 'main'
+    "BrowserWork" = 'main'
+    "Ext1" = [ 'secondary', 'main' ]
+    "Ext2" = [ 'secondary', 'main' ]
+    "Ext3" = [ 'secondary', 'main' ]
+    "Ext4" = [ 'secondary', 'main' ]
+    "Ext5" = [ 'secondary', 'main' ]
+    "Misc" = 'main'
+    "Orbstack" = 'main'
+    "Email" = 'main'
+    "IDE" = 'main'
+    "Terminal" = 'main'
 
 [mode.resize.binding]
     h = 'resize width -50'

@@ -1,5 +1,5 @@
+.DS_Store
 jgit
-neofetch
 zsh/.zsh_history
 zsh/.zcompdump-*.zwc
 zsh/.zcompdump-*
@@ -9,3 +9,8 @@ tmux/plugins/catppuccin/*
 nvim/tmux-client-*
 nvim/tmux-server-*
 nvim/lazy-lock.json
+opencode
+jiratui
+intelephense
+git
+cliamp

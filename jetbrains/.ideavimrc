@@ -48,8 +48,8 @@ set nowrap
 set splitbelow
 set splitright
 
-" Decrease updatetime to 250ms
-set updatetime=250
+" Decrease updatetime to 100ms
+set updatetime=100
 
 " Enable persistent undo history
 set undofile

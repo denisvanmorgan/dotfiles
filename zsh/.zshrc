@@ -3,6 +3,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
+export EDITOR=nvim
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"
@@ -18,7 +19,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_TMUX_AUTOSTART=true
 
 # Ghostty
-XDG_CONFIG_HOME="$HOME/.config/ghostty"
+XDG_CONFIG_HOME="$HOME/.config"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.variables
@@ -75,5 +76,13 @@ alias y="yazi"
 alias reload="source $HOME/.config/zsh/.zshrc"
 
 phpstorm() { /Applications/PhpStorm.app/Contents/MacOS/phpstorm $* &> /dev/null &| }
+
+gcse() {
+    gc "SE1UX1-$1"
+}
+
+gcbse() {
+    gbc "SE1UX1-$1"
+}
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
