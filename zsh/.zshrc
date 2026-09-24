@@ -22,7 +22,9 @@ ZSH_TMUX_AUTOSTART=true
 XDG_CONFIG_HOME="$HOME/.config"
 
 source $ZSH/oh-my-zsh.sh
+set -a
 source $HOME/.variables
+set +a
 
 # Docker aliases
 alias dcu="docker compose up -d"
@@ -86,3 +88,12 @@ gcbse() {
 }
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+typeset -U path   # removes duplicate entries automatically
+
+path=(
+  $HOME/.cargo/bin
+  $path           # keep the existing PATH at the end
+)
+
+export PATH
