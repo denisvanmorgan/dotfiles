@@ -93,6 +93,7 @@ typeset -U path   # removes duplicate entries automatically
 
 path=(
   $HOME/.cargo/bin
+  $HOME/.local/bin
   $path           # keep the existing PATH at the end
 )
 

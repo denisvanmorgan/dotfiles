@@ -14,6 +14,7 @@ return {
         { '<leader>ff', '<cmd>Telescope find_files<CR>', desc = 'Fuzzy search' },
         { '<leader>fw', '<cmd>Telescope live_grep<CR>', desc = 'Fuzzy word search' },
         { '<leader>b', '<cmd>Telescope buffers<CR>', desc = 'List buffers' },
+        { '<leader>gf', '<cmd>Telescope git_status<CR>', desc = 'Git changed files' },
     },
     config = function()
         local telescope = require('telescope')
