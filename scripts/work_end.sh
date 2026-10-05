@@ -22,7 +22,6 @@ close_app() {
 main() {
     echo "I need sudo... for VPN disconnection"
     request_sudo_access
-    pkill -f "firefox.*-P WS"
     close_app "Ghostty"
     close_app "Slack"
     close_app "Spark"

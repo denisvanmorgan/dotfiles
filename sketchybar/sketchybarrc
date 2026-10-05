@@ -1,67 +1,69 @@
 #!/bin/bash
 
-source "$CONFIG_DIR/colors.sh" # Loads all defined colors
-
-# This is a demo config to show some of the most important commands more easily.
-# This is meant to be changed and configured, as it is intentionally kept sparse.
-# For a more advanced configuration example see my dotfiles:
-# https://github.com/FelixKratz/dotfiles
+source "$CONFIG_DIR/colors.sh"
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
+FONT="SF Pro"
+APP_FONT="sketchybar-app-font:Regular"
+NOTCH_HEIGHT=33 # visual bottom edge of the camera housing (macOS reports a 32pt menu bar strip)
+NOTCH_WIDTH=186 # notch spans x 771.5-956.5 (185pt), rounded to even so the integer layout stays symmetric
+PILL_HEIGHT=26
+BORDER_OUTSET=1 # JankyBorders (width=2.0 hidpi=on) draws 2px = 1pt outside every window
+SCREEN_GAP=$((15 - BORDER_OUTSET)) # AeroSpace outer.left / outer.right gap, so pills line up with bordered windows
 
-##### Bar Appearance #####
-# Configuring the general appearance of the bar, these are only some of the
-# options available. For all options see:
-# https://felixkratz.github.io/SketchyBar/config/bar
-# If you are looking for other colors, see the color picker:
-# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
-
-sketchybar --bar height=45        \
-                 blur_radius=0   \
-                 corner_radius=7 \
-                 y_offset=15 \
-                 position=top     \
-                 sticky=off       \
-                 padding_left=10  \
-                 padding_right=10 \
-                 margin=15 \
-                 border_width=1 \
+# Items are vertically centred in the bar, so a bar of 2*notch - pill height
+# puts the bottom edge of every pill exactly on the bottom edge of the notch.
+# Items around the notch use the q (left of notch) / e (right of notch) positions,
+# kept SCREEN_GAP away from the notch, the same as the outer pills from the screen edges.
+sketchybar --bar position=top \
+                 height=$((2 * NOTCH_HEIGHT - PILL_HEIGHT)) \
                  color=$BAR_COLOR \
-                 border_color=$ACCENT_COLOR
+                 margin=0 \
+                 y_offset=0 \
+                 padding_left=$SCREEN_GAP \
+                 padding_right=$SCREEN_GAP \
+                 notch_width=$((NOTCH_WIDTH + 2 * SCREEN_GAP)) \
+                 display=all \
+                 sticky=on \
+                 topmost=off \
+                 shadow=off
 
-##### Changing Defaults #####
-# We now change some default values that are applied to all further items
-# For a full list of all available item properties see:
-# https://felixkratz.github.io/SketchyBar/config/items
+sketchybar --default icon.font="$FONT:Semibold:14.0" \
+                     icon.color=$TEXT \
+                     label.font="$FONT:Semibold:13.0" \
+                     label.color=$TEXT \
+                     padding_left=0 \
+                     padding_right=0 \
+                     icon.padding_left=8 \
+                     icon.padding_right=4 \
+                     label.padding_left=4 \
+                     label.padding_right=8
 
-sketchybar --default icon.font="SF Pro:Semibold:15.0"  \
-                     icon.color=$WHITE                 \
-                     label.font="SF Pro:Semibold:15.0" \
-                     label.color=$WHITE                \
-                     background.color=$ITEM_BG_COLOR       \
-                     background.corner_radius=5            \
-                     background.height=24                  \
-                     padding_left=5                        \
-                     padding_right=5                       \
-                     label.padding_left=4                  \
-                     label.padding_right=10                \
-                     icon.padding_left=10                  \
-                     icon.padding_right=4
+# Shared look of the floating pills (applied to brackets / standalone items)
+PILL=(background.drawing=on
+      background.color=$PILL_COLOR
+      background.border_color=$PILL_BORDER_COLOR
+      background.border_width=1
+      background.height=$PILL_HEIGHT
+      background.corner_radius=8)
 
-# -- Left Side Items --
-source $ITEM_DIR/spaces.sh
-source $ITEM_DIR/front_app.sh
+# Compile the Swift helpers (lock screen, chip temperature, fan speed) when missing or outdated
+for src in "$CONFIG_DIR"/helpers/*.swift; do
+  [ "${src%.swift}" -nt "$src" ] || swiftc -O "$src" -o "${src%.swift}"
+done
 
-# -- Right Side Items --
-source $ITEM_DIR/calendar.sh
-source $ITEM_DIR/volume.sh
-source $ITEM_DIR/battery.sh
-source $ITEM_DIR/cpu.sh
-source $ITEM_DIR/keyboard_layout.sh
+# -- Left: apple logo + workspaces | left of notch: front app --
+source "$ITEM_DIR/apple.sh"
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
 
-##### Finalizing Setup #####
-# The below command is only needed at the end of the initial configuration to
-# force all scripts to run the first time, it should never be run in an item script.
+# -- Right of notch: system stats | right: battery + clock --
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/temp.sh"
+source "$ITEM_DIR/fan.sh"
+source "$ITEM_DIR/ram.sh"
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/battery.sh"
 
 sketchybar --update

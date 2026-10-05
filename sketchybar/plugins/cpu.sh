@@ -1,10 +1,16 @@
 #!/bin/bash
 
-CORE_COUNT=$(sysctl -n machdep.cpu.thread_count)
-CPU_INFO=$(ps -eo pcpu,user)
-CPU_SYS=$(echo "$CPU_INFO" | grep -v $(whoami) | sed "s/[^ 0-9\.]//g" | awk "{sum+=\$1} END {print sum/(100.0 * $CORE_COUNT)}")
-CPU_USER=$(echo "$CPU_INFO" | grep $(whoami) | sed "s/[^ 0-9\.]//g" | awk "{sum+=\$1} END {print sum/(100.0 * $CORE_COUNT)}")
+source "$CONFIG_DIR/colors.sh"
 
-CPU_PERCENT="$(echo "$CPU_SYS $CPU_USER" | awk '{printf "%.0f\n", ($1 + $2)*100}')"
+CORES=$(sysctl -n hw.logicalcpu)
+LOAD=$(ps -A -o %cpu= | awk -v cores="$CORES" '{ s += $1 } END { p = s / cores; printf "%.0f", (p > 100 ? 100 : p) }')
 
-sketchybar --set $NAME label="$CPU_PERCENT%"
+if [ "$LOAD" -ge 85 ]; then
+  COLOR=$RED
+elif [ "$LOAD" -ge 60 ]; then
+  COLOR=$YELLOW
+else
+  COLOR=$TEAL
+fi
+
+sketchybar --set "$NAME" label="$LOAD%" icon.color=$COLOR

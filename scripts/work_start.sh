@@ -20,30 +20,38 @@ open_app() {
     open -a $app_name
 }
 
-open_firefox_instance() {
-    local profile=$1
-    open -a "Firefox" -n --args -P $profile
+usage() {
+    echo "Usage: $(basename "$0") [-u]"
+    echo "  -u  update devstack"
+    exit 1
 }
+
+update_devstack=false
+
+while getopts ":u" opt; do
+    case $opt in
+        u) update_devstack=true ;;
+        *) usage ;;
+    esac
+done
 
 main() {
     echo "I need sudo... for VPN"
     request_sudo_access
-    open_firefox_instance "WS"
-    sleep 1.5
-    /usr/local/bin/aerospace move-node-to-workspace --window-id $(/usr/local/bin/aerospace list-windows --all | grep Firefox | awk -F '|' '{print $1}') "BrowserWork"
-    open_firefox_instance "Personal"
     open_app "Ghostty"
     open_app "Orbstack"
     open_app "Slack"
-    open_app "Spark"
     sleep 1
     /usr/local/bin/aerospace workspace "Terminal"
     echo "All apps opened ✅"
     sudo sh $HOME/.config/scripts/start_vpn.sh $WS_VPN_PATH
-    sleep 1
-    echo "Updating devstack... 🐳"
-    sh $HOME/workspace/tools/development-stack/bin/update.sh
-    echo "Done updating devstack 🔥"
+    if $update_devstack; then
+        sleep 1
+        echo "Updating devstack... 🐳"
+        sh $HOME/websupport/workspace/tools/development-stack/bin/update.sh
+        echo "Done updating devstack 🔥"
+    fi
+    open_app "Ghostty"
 }
 
 error_handler() {

@@ -1,20 +1,29 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
 
+config-version = 2
+
 start-at-login = true
 after-login-command = []
+
+# Keep every workspace alive even when empty (sketchybar creates one item per workspace)
+persistent-workspaces = [
+    'Browser', 'BrowserWork', 'Ext1', 'Ext2', 'Ext3', 'Ext4', 'Ext5',
+    'Misc', 'Orbstack', 'Email', 'IDE', 'Terminal', 'Free',
+]
 
 # Startup borders
 # Startup SketchyBar
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffc6a0f6 inactive_color=0xffb7bdf8 width=2.0 style=round hidpi=on',
-  #'exec-and-forget sketchybar'
+  # borders runs as a brew service (config: ~/.config/borders/bordersrc)
+  # sketchybar runs as a brew service; reload it so it picks up the workspaces
+  'exec-and-forget /opt/homebrew/bin/sketchybar --reload'
 ]
 
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
     '/bin/bash', 
     '-c',
-    'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+    '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # i3 doesn't have "normalizations" feature that why we disable them here.
@@ -26,7 +35,10 @@ enable-normalization-opposite-orientation-for-nested-containers = false
 
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = 'move-mouse monitor-lazy-center'
+on-focus-changed = [
+    'move-mouse monitor-lazy-center',
+    'exec-and-forget /opt/homebrew/bin/sketchybar --trigger aerospace_focus_change',
+]
 
 # Layout
 # accordion-padding = 30
@@ -36,7 +48,9 @@ inner.horizontal = 15
 inner.vertical = 15
 outer.left = 15
 outer.bottom = 15
-outer.top = 15
+# Built-in display: windows already start below the notch row (32pt) -> 32 + 10 = 42.
+# Other monitors have no reserved row (menu bar is hidden), so clear the 40pt sketchybar there too.
+outer.top = [{ monitor.'built-in' = 10 }, 42]
 outer.right = 15
 
 [mode.main.binding]
@@ -111,7 +125,7 @@ outer.right = 15
     alt-shift-0 = 'move-node-to-workspace Email'
     alt-shift-p = 'move-node-to-workspace IDE'
     alt-shift-m = 'move-node-to-workspace Terminal'
-    alt-shift-g = 'move-node-to-workspace Terminal'
+    alt-shift-g = 'move-node-to-workspace Free'
     ctrl-alt-cmd-l = 'move-workspace-to-monitor right'
     ctrl-alt-cmd-h = 'move-workspace-to-monitor left'
 
