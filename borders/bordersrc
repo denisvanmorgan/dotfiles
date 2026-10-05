@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Catppuccin Macchiato: mauve for the focused window, lavender for the rest.
+# width=2.0 + hidpi=on draws 1pt outside each window (BORDER_OUTSET in sketchybarrc).
+options=(
+  style=round
+  width=2.0
+  hidpi=on
+  active_color=0xffc6a0f6
+  inactive_color=0xffb7bdf8
+)
+
+borders "${options[@]}"
