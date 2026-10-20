@@ -5,8 +5,8 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=nvim
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
 export ZDOTDIR=$HOME/.config/zsh
 
@@ -49,6 +49,9 @@ alias startvpn="sudo sh $HOME/.config/scripts/start_vpn.sh $WS_VPN_PATH"
 alias endvpn="sudo sh $HOME/.config/scripts/kill_vpn.sh"
 alias workstart="sh $HOME/.config/scripts/work_start.sh"
 alias workend="sh $HOME/.config/scripts/work_end.sh"
+
+# TIDE work
+alias tidevpn="sudo openfortivpn -c $TIDE_WORKSPACE/vpn/vpn.conf --saml-login -v"
 
 # P2P
 alias p2p="cd $HOME/dev/api" 
@@ -94,7 +97,11 @@ typeset -U path   # removes duplicate entries automatically
 path=(
   $HOME/.cargo/bin
   $HOME/.local/bin
-  $path           # keep the existing PATH at the end
+  $HOME/.composer/vendor/bin
+  $path
 )
 
 export PATH
+
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+

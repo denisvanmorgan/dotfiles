@@ -42,13 +42,13 @@ main() {
     open_app "Orbstack"
     open_app "Slack"
     sleep 1
-    /usr/local/bin/aerospace workspace "Terminal"
+    /opt/homebrew/bin/aerospace workspace "Terminal"
     echo "All apps opened ✅"
     sudo sh $HOME/.config/scripts/start_vpn.sh $WS_VPN_PATH
     if $update_devstack; then
         sleep 1
         echo "Updating devstack... 🐳"
-        sh $HOME/websupport/workspace/tools/development-stack/bin/update.sh
+        sh $WS_WORKSPACE/tools/development-stack/bin/update.sh
         echo "Done updating devstack 🔥"
     fi
     open_app "Ghostty"

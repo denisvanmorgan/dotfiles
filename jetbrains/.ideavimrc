@@ -9,13 +9,12 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'dbakker/vim-paragraph-motion'
 " Nerdtree
 Plug 'preservim/nerdtree'
+" Function (af/if) and class (ac) text objects, like nvim-treesitter-textobjects
+Plug 'kana/vim-textobj-function'
+Plug 'vim-textobj-class'
 
 set incsearch
-
-" Set encodings
-set scriptencoding=utf-8
-set encoding=utf-8
-set fileencoding=utf-8
+set hlsearch
 
 " Set leader key to space
 let mapleader = " "
@@ -28,37 +27,12 @@ set relativenumber
 " Disable showing the mode below the statusline
 set noshowmode
 
-" Set tabs to 4 spaces
-set tabstop=4
-set softtabstop=4
-set expandtab
-
-" Enable auto indenting and set it to spaces
-set smartindent
-set shiftwidth=4
-
 " Enable smart indenting
 set breakindent
 set autoindent
 
 " Disable text wrap
 set nowrap
-
-" Better splitting
-set splitbelow
-set splitright
-
-" Decrease updatetime to 100ms
-set updatetime=100
-
-" Enable persistent undo history
-set undofile
-
-" Enable 24-bit color
-set termguicolors
-
-" Enable the sign column to prevent the screen from jumping
-set signcolumn=yes
 
 " Enable cursor line highlight
 set cursorline
@@ -69,38 +43,83 @@ set scrolloff=999
 " Set command height to 0
 set cmdheight=0
 
-set backspace=indent,eol,start
-set title
 set ignorecase
+set smartcase
 set showcmd
+
+" Vim handles these in normal/visual, IDE keeps them in insert (completion etc.)
+sethandler <C-Space> n-v:vim i:ide
+sethandler <F2> n-v:vim i:ide
+sethandler <F3> n-v:vim i:ide
+sethandler <F4> n-v:vim i:ide
+
+" Neovim default: Y yanks to end of line
+nnoremap Y y$
 
 " Buffer navigation
 nnoremap <leader>d :bd<CR>
 
 " Clipboard
-vnoremap <leader>y "+y
+xnoremap <leader>y "+y
 nnoremap <leader>y "+y
-vnoremap <leader>p "+p
+xnoremap <leader>p "+p
 nnoremap <leader>p "+p
-inoremap <leader>p <C-r>+
+
+" Incremental selection
+nmap <C-Space> <Action>(EditorSelectWord)
+xmap <C-Space> <Action>(EditorSelectWord)
+xmap <BS> <Action>(EditorUnSelectWord)
+
+" Text objects
+omap af <Plug>(textobj-function-am)
+xmap af <Plug>(textobj-function-am)
+omap if <Plug>(textobj-function-im)
+xmap if <Plug>(textobj-function-im)
+
+" Telescope
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fw <Action>(FindInPath)
+nmap <leader>b <Action>(RecentFiles)
+
+" Neo-tree
+nnoremap <leader>tr :NERDTreeToggle<CR>
+nnoremap <leader>e :NERDTreeFind<CR>
+
+" LSP
+nmap K <Action>(ShowHoverInfo)
+nmap go <Action>(GotoTypeDeclaration)
+nmap gr <Action>(ShowUsages)
+nmap gO <Action>(FileStructurePopup)
+nmap ]d <Action>(GotoNextError)
+nmap [d <Action>(GotoPreviousError)
+nmap <F2> <Action>(RenameElement)
+nmap <F3> <Action>(ReformatCode)
+xmap <F3> <Action>(ReformatCode)
+nmap <F4> <Action>(ShowIntentionActions)
+
+" Gitsigns
+nmap ]c <Action>(VcsShowNextChangeMarker)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+nmap <leader>gr <Action>(Vcs.RollbackChangedLines)
+nmap <leader>gp <Action>(VcsShowCurrentChangeMarker)
+nmap <leader>gb <Action>(Annotate)
 
 " -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
-nnoremap <leader>r :action Run<CR>
-nnoremap <leader>s :action Stop<CR>
-nnoremap \b :action ToggleLineBreakpoint<CR>
-nnoremap ga :action GotoAction<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gs :action GotoSuperMethod<CR>
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap <leader>sh :action ShowHoverInfo<CR>
-nnoremap <leader>se :action ShowErrorDescription<CR>
-nnoremap <leader>gt :action GotoTest<CR>
-nnoremap <leader>re :action RenameElement<CR>
-nnoremap <leader>rf :action RenameFile<CR>
-nnoremap <leader>fu :action FindUsages<CR>
-nnoremap <leader>su :action ShowUsages<CR>
-nnoremap <leader>h :action PreviousTab<CR>
-nnoremap <leader>j :action NextTab<CR>
-nnoremap <C-z> :action ToggleDistractionFreeMode<CR>
-nnoremap <leader>nc :action PhpNewClass<CR>
-map <leader>tr :NERDTree<CR>
+nmap <leader>r <Action>(Run)
+nmap <leader>s <Action>(Stop)
+nmap \b <Action>(ToggleLineBreakpoint)
+nmap ga <Action>(GotoAction)
+nmap gi <Action>(GotoImplementation)
+nmap gs <Action>(GotoSuperMethod)
+nmap gd <Action>(GotoDeclaration)
+nmap <leader>sh <Action>(ShowHoverInfo)
+nmap <leader>se <Action>(ShowErrorDescription)
+nmap <leader>gt <Action>(GotoTest)
+nmap <leader>re <Action>(RenameElement)
+nmap <leader>rf <Action>(RenameFile)
+nmap <leader>fu <Action>(FindUsages)
+nmap <leader>su <Action>(ShowUsages)
+nmap <leader>h <Action>(PreviousTab)
+nmap <leader>j <Action>(NextTab)
+nmap <C-z> <Action>(ToggleDistractionFreeMode)
+nmap <leader>nc <Action>(PhpNewClass)

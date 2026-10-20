@@ -32,7 +32,7 @@ main() {
     osascript -e 'quit app "Orbstack"'
     echo "Disconnecting VPN... 🔌"
     sudo sh $HOME/.config/scripts/kill_vpn.sh
-    /usr/local/bin/aerospace workspace "Terminal" > /dev/null 2>&1 &
+    /opt/homebrew/bin/aerospace workspace "Terminal" > /dev/null 2>&1 &
     echo "All apps closed ✅"
 }
 
