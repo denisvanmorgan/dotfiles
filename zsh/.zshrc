@@ -18,7 +18,6 @@ plugins=(git tmux)
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_TMUX_AUTOSTART=true
 
-# Ghostty
 XDG_CONFIG_HOME="$HOME/.config"
 
 source $ZSH/oh-my-zsh.sh
@@ -45,10 +44,10 @@ alias pullstack="docker compose -f $WS_WORKSPACE/tools/development-stack/docker-
 alias dlws="docker login $WS_REGISTRY_ADDRESS -u $WS_REGISTRY_USERNAME -p $WS_REGISTRY_PASS"
 alias dlwstb="docker login -u $TB_REGISTRY_USERNAME -p $TB_REGISTRY_PASSWORD $TB_REGISTRY_ADDRESS"
 alias ws="cd $WS_WORKSPACE"
-alias startvpn="sudo sh $HOME/.config/scripts/start_vpn.sh $WS_VPN_PATH"
-alias endvpn="sudo sh $HOME/.config/scripts/kill_vpn.sh"
-alias workstart="sh $HOME/.config/scripts/work_start.sh"
-alias workend="sh $HOME/.config/scripts/work_end.sh"
+alias startvpn="sudo sh $XDG_CONFIG_HOME/scripts/start_vpn.sh $WS_VPN_PATH"
+alias endvpn="sudo sh $XDG_CONFIG_HOME/scripts/kill_vpn.sh"
+alias workstart="sh $XDG_CONFIG_HOME/scripts/work_start.sh"
+alias workend="sh $XDG_CONFIG_HOME/scripts/work_end.sh"
 
 # TIDE work
 alias tidevpn="sudo openfortivpn -c $TIDE_WORKSPACE/vpn/vpn.conf --saml-login -v"
@@ -67,7 +66,7 @@ alias p2prunners="ssh $P2P_RUNNERS_IP"
 alias dlp2p="docker login $P2P_REGISTRY_ADDRESS -u $P2P_REGISTRY_USERNAME -p $P2P_REGISTRY_PASSWORD"
 
 # Nvim config
-alias nvimconf="cd $HOME/.config/nvim"
+alias nvimconf="cd $XDG_CONFIG_HOME/nvim"
 
 # Nvim
 alias v="nvim"
@@ -89,8 +88,6 @@ gcse() {
 gcbse() {
     gbc "SE1UX1-$1"
 }
-
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 typeset -U path   # removes duplicate entries automatically
 
